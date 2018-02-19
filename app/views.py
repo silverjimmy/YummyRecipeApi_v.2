@@ -219,22 +219,26 @@ class CategoryView(Resource):
         if args['q']:
 
             category = Category.query \
-                          .filter_by(created_by=user_id) \
                           .filter(Category.name
-                                  .ilike('%' + args['q'] + '%')).paginate(page=args['page'],
-                                                                         per_page=args['limit'],
+                                  .ilike('%' + args['q'] + '%')).filter_by(created_by=user_id).paginate(page=args.get('page', 1),
+                                                                         per_page=args.get('limit', 3),
                                                                          error_out=False)
 
 
-            for category in category.items:
+            for cat in category.items:
                 categories = {
-                        'id': category.id,
-                        'title': category.name,
-                        'description': category.description,
-                        'created_on': str(category.created_on),
+                        'id': cat.id,
+                        'title': cat.name,
+                        'description': cat.description,
+                        'created_on': str(cat.created_on),
                         }
                 categories_data.append(categories)
-            return (categories_data), 200
+                format_category = {
+                                     "categories": categories_data,
+                                    "total": category.pages,
+                                    "current_page": category.page,
+            }
+            return (format_category), 200
 
         else:
             category = (Category.query.filter_by(created_by=user_id).paginate(page=args['page'],
