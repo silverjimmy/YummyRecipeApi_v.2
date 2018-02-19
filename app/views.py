@@ -251,7 +251,8 @@ class CategoryView(Resource):
                 categories_data.append(categories)
             format_category = {
                                     "categories": categories_data,
-                                    "total": category.pages
+                                    "total": category.pages,
+                                    "current_page": category.page,
             }
             return (format_category), 200
 
