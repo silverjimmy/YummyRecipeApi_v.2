@@ -12,3 +12,37 @@ script:
 
 after_success:
   coveralls
+
+  +++++++++++++++++++++
+language: python
+python:
+  - "3.6"
+branches:
+    only:
+        - master
+services:
+  - postgresql
+
+# command to install dependencies
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls
+  - pip install coverage
+
+env:
+  global:
+    - export SECRET="a-secret-key"
+    - export DATABASE_URL="postgresql://localhost/flask_api"
+
+
+before_script:
+  - sudo -u postgres createdb flask_api
+  - python manage.py db init
+  - python manage.py db migrate
+  - python manage.py db upgrade
+
+# command to run tests
+script:
+    - nosetests --with-coverage --cover-package=app
+after_success:
+  coveralls
