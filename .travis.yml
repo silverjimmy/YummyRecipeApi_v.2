@@ -1,32 +1,22 @@
 language: python
 python:
-  - "3.6"
-branches:
-    only:
-        - master
-services:
-  - postgresql
-
-# command to install dependencies
+    - "3.6.3"
+# Install all dependencies
 install:
-  - pip install -r requirements.txt
-  - pip install coveralls
-  - pip install coverage
+    - pip install -r requirements.txt
+    - pip install pytest-cov
+    - pip install coveralls
 
-env:
-  global:
-    - export SECRET="a-secret-key"
-    - export DATABASE_URL="postgresql://localhost/flask_api"
-
-
+services:
+    - postgresql
+# command to create database
 before_script:
-  - sudo -u postgres createdb flask_api
-  - python manage.py db init
-  - python manage.py db migrate
-  - python manage.py db upgrade
-
+    - psql -c 'create database flask_api;' -U postgres
+    - python manage.py db init
+    - python manage.py db migrate
+    - python manage.py db upgrade
 # command to run tests
 script:
-    - nosetests --with-coverage --cover-package=app
+    - py.test --cov=recipe tests/
 after_success:
-  coveralls
+    - coveralls
