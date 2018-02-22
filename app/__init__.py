@@ -13,11 +13,13 @@ from config import app_config
 from app.endpoints import api_blueprint
 
 
+
+
 def create_app(config_name):
     """Create app."""
     app = Flask(__name__)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config.from_object(app_config["production"])
+    app.config.from_object(app_config["development"])
     db.init_app(app)
     app.register_blueprint(api_blueprint)
     CORS(app) 
