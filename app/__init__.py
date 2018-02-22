@@ -14,11 +14,11 @@ from app.endpoints import api_blueprint
 
 
 
-
 def create_app(config_name):
     """Create app."""
     app = Flask(__name__)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['CORS_HEADERS'] = 'Content-Type'
     app.config.from_object(app_config["development"])
     db.init_app(app)
     app.register_blueprint(api_blueprint)
