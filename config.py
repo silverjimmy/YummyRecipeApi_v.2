@@ -17,7 +17,7 @@ class DevelopmentConfig(Config):
 
     DEBUG = True
     SQLALCHEMY_ECHO = False
-    SQLALCHEMY_DATABASE_URI = os.environ('DATABASE_URL')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
 
 
 class TestingConfig(Config):
