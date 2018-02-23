@@ -77,6 +77,7 @@ class AuthRegister(Resource):
                     password=args['password'])
         new_user.save()
         return {'message': 'User Registration success!'}, 201
+        return {'message': 'Kindly check your details!'}, 500
 
 
 class AuthLogin(Resource):
