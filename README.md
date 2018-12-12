@@ -36,7 +36,7 @@ Create a .env file and add the following:
 source name-of-virtual-environment/bin/activate
 export FLASK_APP="run.py"
 export SECRET="a-secret-key"
-export DATABASE_URL="postgresql://localhost/flask_api"
+export DATABASE_URL="postgresql://postgres:postgres@localhost/flask_api"
 ```
 
 Then run:
@@ -46,9 +46,9 @@ source .env
 
 Run the migrations:
 ```
-python manage.py db init
-python manage.py db migrate
-python manage.py db upgrade
+python3 manage.py db init
+python3 manage.py db migrate
+python3 manage.py db upgrade
 ```
 
 Launch the program:
@@ -60,3 +60,21 @@ Else:
 python run.py
 ```
 
+EndPoints::
+
+# AuthRegister(post)
+/auth/register
+    Takes in:
+        - username,email,password ```requried```
+
+# AuthLogin(post)
+/auth/login
+    Takes in:
+        - username,password ```requried```
+# CategoryView(post,get,put,delete)
+/category/ ```name, description```
+/category/<int:id>
+
+# RecipeView(post,get,put,delete)
+/category/<id>/recipe/ ```name, description```
+/category/<id>/recipe/<recipe_id>
