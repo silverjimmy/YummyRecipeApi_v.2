@@ -53,6 +53,10 @@ python manage.py db upgrade
 
 Launch the program:
 ```
+For python3 use:
+python3 run.py
+
+Else:
 python run.py
 ```
 
